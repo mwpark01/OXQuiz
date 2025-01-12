@@ -43,15 +43,27 @@ struct ContentView: View {
             }
             Spacer()
             HStack {
-                Text("\(countCorrect)개 맞춤")
-                Text("\t\(countWrong)개 틀림")
+                Spacer()
+                Text("\(countCorrect)")
+                Spacer()
+                Text("\t\(countWrong)")
+                Spacer()
+            }
+            .fontWeight(.bold)
+            
+            HStack {
+                Spacer()
+                Text("맞춤")
+                Spacer()
+                Text("틀림")
+                Spacer()
             }
             
             if progress >= (1.0 - 1/questions) {
-                Text("준비된 문제가 모두 완료되었습니다.")
-                    .foregroundStyle(.blue)
-                    .font(.title2)
-                    .lineLimit(1)
+                Text("")
+                    .alert("준비된 문제가 모두 종료되었습니다.", isPresented: $finished, actions: { Button("ok") { resetGame() }},
+                           message:{
+                        Text("총 \(countCorrect)개 맞추고 \(countWrong)개 틀렸습니다.")})
             } else {
                 Text("")
             }
@@ -94,7 +106,6 @@ struct ContentView: View {
         progress += (1.0/questions)
         reloadGame()
     }
-    
 }
 
 #Preview {
